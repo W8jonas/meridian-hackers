@@ -1,6 +1,7 @@
 import time
 from stellar_sdk import Keypair, Network, SorobanServer, TransactionBuilder, scval
 from stellar_sdk.soroban_rpc import GetTransactionStatus
+from stellar_sdk.keypair import Keypair
 from typing import List, Any
 class SorobanContractInvoker:
     def __init__(self, rpc_server_url: str, network_passphrase: str):
@@ -29,7 +30,7 @@ class SorobanContractInvoker:
                source_keypair: Keypair, 
                contract_id: str, 
                function_name: str, 
-               parameters: List[scval.Scval] = []) -> Any:
+               parameters: List[Any] = []) -> Any:
         print(f"Carregando detalhes da conta: {source_keypair.public_key}")
         source_account = self.soroban_server.load_account(source_keypair.public_key)
         
