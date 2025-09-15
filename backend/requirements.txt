@@ -1,1 +1,2 @@
 Flask==2.3.3
+stellar-sdk====13.0.0
