@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request
 from User import User
+import Observer
+from wallets import Wallets
 # Inicializa a aplicação Flask
 app = Flask(__name__)
 # Rota principal
@@ -9,6 +11,12 @@ def home():
 @app.route("/get-new-user", methods=["GET"])
 def get_new_user():  
     return User.get_new_user()
+@app.route("/run",methods=["GET"])
+def run():
+    wallets = Wallets()
+    observer = Observer.Observer(wallets)
+    observer.run()
+
 # Executa a aplicação
 if __name__ == "__main__":
     app.run(debug=True)

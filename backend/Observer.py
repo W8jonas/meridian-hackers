@@ -2,13 +2,13 @@ import time
 from stellar_sdk import Server, Keypair
 import config
 class Observer:
-    def __init__(self, public_key):
-        self.public_key = public_key
+    def __init__(self, wallets):
+        self.wallets = wallets
         self.server = Server(config.URL_SERVER) 
         self.seen_transactions = set()  
-    def check_new_transactions(self):
+    def check_new_transactions(self,public_key):
         try:
-            payments = self.server.payments().for_account(self.public_key).limit(10).order(desc=True).call()
+            payments = self.server.payments().for_account(public_key).limit(10).order(desc=True).call()
         except Exception as e:
             print("Erro ao consultar a wallet:", e)
             return []
@@ -28,10 +28,11 @@ class Observer:
                 })
         return new_tx
     def run(self, interval=200):
-        print(f"Monitorando wallet {self.public_key} na Testnet")
+        print(f"Monitorando wallet na Testnet")
         while True:
-            new_transactions = self.check_new_transactions()
-            if new_transactions:
-                for tx in new_transactions:
-                    print("Nova transação detectada:", tx)
+            for wallet in self.wallets.wallets:
+                new_transactions = self.check_new_transactions(wallet["public_key"])
+                if new_transactions:
+                    for tx in new_transactions:
+                        print("Nova transação detectada:", tx)
             time.sleep(interval)
