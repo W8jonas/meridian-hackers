@@ -1,0 +1,1 @@
+URL_GET_BOT = "https://friendbot.stellar.org"
