@@ -7,6 +7,8 @@ import ContractInvoker
 import config
 from wallets import Wallets
 from ContractInvoker import SorobanContractInvoker
+import Contracts
+
 # Inicializa a aplicação Flask
 app = Flask(__name__)
 CORS(app)
@@ -18,6 +20,10 @@ def run_observer():
     return jsonify({"message":"observador iniciado com sucesso!"})
 thread = threading.Thread(target=run_observer, daemon=True)
 thread.start()
+
+
+Contracts.CreateContract()
+
 
 # Rota principal
 @app.route("/", methods=["GET"])
