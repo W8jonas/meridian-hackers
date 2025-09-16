@@ -1,0 +1,12 @@
+/Users/burghardt/Documents/repositories/fee-vault-v2/target/debug/deps/semver-3449039b754648fb.d: /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/lib.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/backport.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/display.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/error.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/eval.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/identifier.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/impls.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/parse.rs
+
+/Users/burghardt/Documents/repositories/fee-vault-v2/target/debug/deps/libsemver-3449039b754648fb.rmeta: /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/lib.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/backport.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/display.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/error.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/eval.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/identifier.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/impls.rs /Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/parse.rs
+
+/Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/lib.rs:
+/Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/backport.rs:
+/Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/display.rs:
+/Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/error.rs:
+/Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/eval.rs:
+/Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/identifier.rs:
+/Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/impls.rs:
+/Users/burghardt/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/semver-1.0.22/src/parse.rs:
