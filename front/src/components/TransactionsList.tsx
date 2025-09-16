@@ -147,7 +147,7 @@ export const TransactionsList = ({ currentAccount }: TransactionsListProps) => {
                       {tx.to ? `${tx.to.slice(0, 8)}...` : '-'}
                     </TableCell>
                     <TableCell className="text-right font-semibold text-foreground">
-                      {formatAmount(tx.amount, tx.asset_type)}
+                      {formatAmount(tx.amount ?? tx.starting_balance, tx.asset_type)}
                     </TableCell>
                     <TableCell className="text-muted-foreground font-mono text-xs">
                       {tx.id.slice(0, 12)}...

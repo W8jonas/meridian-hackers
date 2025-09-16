@@ -22,6 +22,7 @@ export interface Balance {
   asset_type: string;
   asset_code?: string;
   asset_issuer?: string;
+  starting_balance?: string;
 }
 
 // Utilitários

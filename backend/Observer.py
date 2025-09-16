@@ -21,6 +21,7 @@ class Observer:
                 self.seen_transactions.add(tx_id)
                 new_tx.append({
                     "id": tx_id,
+                    "starting_balance": record.get('starting_balance'),
                     "from": record.get('from'),
                     "to": record.get('to'),
                     "amount": record.get('amount'),

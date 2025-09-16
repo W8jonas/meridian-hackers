@@ -10,8 +10,15 @@ from ContractInvoker import SorobanContractInvoker
 # Inicializa a aplicação Flask
 app = Flask(__name__)
 CORS(app)
+
 wallets = Wallets()
 observer = Observer.Observer(wallets)
+def run_observer():
+    observer.run()
+    return jsonify({"message":"observador iniciado com sucesso!"})
+thread = threading.Thread(target=run_observer, daemon=True)
+thread.start()
+
 # Rota principal
 @app.route("/", methods=["GET"])
 def home():
@@ -19,14 +26,11 @@ def home():
 @app.route("/get-new-user", methods=["GET"])
 def get_new_user():  
     return User.get_new_user()
-def run_observer():
-    observer.run()
-    return jsonify({"message":"observador iniciado com sucesso!"})
 
 @app.route("/run-observer",methods=["GET"])
 def run():
     thread = threading.Thread(target=run_observer, daemon=True)
-    thread.start() 
+    thread.start()
     return jsonify({"message": "observador iniciado com sucesso!"})
 @app.route("/seen-transactions",methods=["GET"])
 def seen_transactions():

@@ -14,9 +14,7 @@ services:
       - "8000:8000"
     command: >
       sh -lc "
-        pip install --no-cache-dir -r requirements.txt
-        &&
-        python -m flask --app app:app run --host 0.0.0.0 --port 8000 --debug
+        pip install --no-cache-dir -r requirements.txt && python -m flask --app app:app run --host 0.0.0.0 --port 8000 --debug
       "
     networks: [appnet]
 
@@ -26,7 +24,7 @@ services:
       dockerfile: Dockerfile
     container_name: meridian-front
     environment:
-      VITE_API_BASE_URL: "http://localhost:8000"
+      VITE_API_BASE_URL: "http://127.0.0.1:8000"
     volumes:
       - ./front:/app
       - /app/node_modules
@@ -34,9 +32,7 @@ services:
       - "5173:5173"
     command: >
       sh -lc "
-        npm i
-        &&
-        npm run dev -- --host 0.0.0.0 --port 5173
+        npm i && npm run dev -- --host 0.0.0.0 --port 5173
       "
     depends_on: [backend]
     networks: [appnet]
