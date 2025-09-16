@@ -1,3 +1,4 @@
+import threading
 from flask import Flask, jsonify, request
 from User import User
 import Observer
@@ -14,11 +15,17 @@ def home():
 @app.route("/get-new-user", methods=["GET"])
 def get_new_user():  
     return User.get_new_user()
-@app.route("/run-observer",methods=["GET"])
-def run():
+def run_observer():
     wallets = Wallets()
     observer = Observer.Observer(wallets)
     observer.run()
+    return jsonify({"message":"observador iniciado com sucesso!"})
+
+@app.route("/run-observer",methods=["GET"])
+def run():
+    thread = threading.Thread(target=run_observer, daemon=True)
+    thread.start() 
+    return jsonify({"message": "observador iniciado com sucesso!"})
 @app.route("/invoke-contract",methods=["POST"])
 def invoke_contract():
     data =  request.get_json()

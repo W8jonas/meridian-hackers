@@ -27,9 +27,9 @@ class Observer:
                     "type": record.get('type')
                 })
         return new_tx
-    def run(self, interval=200):
-        print(f"Monitorando wallet na Testnet")
+    def run(self, interval=20):
         while True:
+            print(f"Monitorando wallet na Testnet")
             for wallet in self.wallets.wallets:
                 new_transactions = self.check_new_transactions(wallet["public_key"])
                 if new_transactions:
