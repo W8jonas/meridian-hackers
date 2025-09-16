@@ -1,2 +1,4 @@
 Flask==2.3.3
-stellar-sdk====13.0.0
+stellar-sdk==13.0.0
+flask-cors==4.0.0
+gunicorn==21.2.0

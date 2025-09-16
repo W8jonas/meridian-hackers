@@ -5,44 +5,39 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: poc-backend
+    container_name: meridian-backend
     environment:
-      - PORT=8000
-    ports:
-      - "8000:8000"
-      - FLASK_APP=app:app
+      PYTHONUNBUFFERED: "1"
     volumes:
       - ./backend:/app
+    ports:
+      - "8000:8000"
     command: >
       sh -lc "
         pip install --no-cache-dir -r requirements.txt &&
-        gunicorn -b 0.0.0.0:8000 ${FLASK_APP} --workers 2 --threads 4 --timeout 120 --reload
+        python -m flask --app app:app run --host 0.0.0.0 --port 8000 --debug
       "
-    networks:
-      - appnet
+    networks: [appnet]
 
   front:
     build:
       context: ./front
       dockerfile: Dockerfile
-    container_name: poc-front
+    container_name: meridian-front
     environment:
-      - VITE_API_BASE_URL=http://localhost:8000
-    ports:
-      - "5173:5173"
+      VITE_API_BASE_URL: "http://localhost:8000"
     volumes:
       - ./front:/app
       - /app/node_modules
+    ports:
+      - "5173:5173"
     command: >
       sh -lc "
-        npm i;
-        &&
+        if [ -f package-lock.json ]; then npm ci; else npm i; fi &&
         npm run dev -- --host 0.0.0.0 --port 5173
       "
-    depends_on:
-      - backend
-    networks:
-      - appnet
+    depends_on: [backend]
+    networks: [appnet]
 
 networks:
   appnet:

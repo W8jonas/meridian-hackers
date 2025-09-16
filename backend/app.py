@@ -1,5 +1,6 @@
 import threading
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from User import User
 import Observer
 import ContractInvoker
@@ -8,6 +9,7 @@ from wallets import Wallets
 from ContractInvoker import SorobanContractInvoker
 # Inicializa a aplicação Flask
 app = Flask(__name__)
+CORS(app)
 wallets = Wallets()
 observer = Observer.Observer(wallets)
 # Rota principal
@@ -59,4 +61,4 @@ def consultar_saldo():
     return jsonify(observer.check_saldo(data))
 # Executa a aplicação
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8000, host='0.0.0.0')
