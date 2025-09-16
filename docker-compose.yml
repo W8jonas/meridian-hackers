@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: poc-backend
+    environment:
+      - PORT=8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    command: >
+      sh -lc "
+        pip install --no-cache-dir -r requirements.txt &&
+        gunicorn -b 0.0.0.0:8000 ${FLASK_APP:-app:app} --workers 2 --threads 4 --timeout 120 --reload
+      "
+    networks:
+      - appnet
+
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: poc-front
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+    command: >
+      sh -lc "
+        npm i;
+        &&
+        npm run dev -- --host 0.0.0.0 --port 5173
+      "
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
