@@ -22,7 +22,7 @@ thread = threading.Thread(target=run_observer, daemon=True)
 thread.start()
 
 
-Contracts.CreateContract()
+Contracts.create_contract()
 
 
 # Rota principal
