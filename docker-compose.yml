@@ -14,7 +14,8 @@ services:
       - "8000:8000"
     command: >
       sh -lc "
-        pip install --no-cache-dir -r requirements.txt &&
+        pip install --no-cache-dir -r requirements.txt
+        &&
         python -m flask --app app:app run --host 0.0.0.0 --port 8000 --debug
       "
     networks: [appnet]
@@ -33,7 +34,8 @@ services:
       - "5173:5173"
     command: >
       sh -lc "
-        if [ -f package-lock.json ]; then npm ci; else npm i; fi &&
+        npm i
+        &&
         npm run dev -- --host 0.0.0.0 --port 5173
       "
     depends_on: [backend]
