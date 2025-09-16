@@ -10,12 +10,13 @@ services:
       - PORT=8000
     ports:
       - "8000:8000"
+      - FLASK_APP=app:app
     volumes:
       - ./backend:/app
     command: >
       sh -lc "
         pip install --no-cache-dir -r requirements.txt &&
-        gunicorn -b 0.0.0.0:8000 ${FLASK_APP:-app:app} --workers 2 --threads 4 --timeout 120 --reload
+        gunicorn -b 0.0.0.0:8000 ${FLASK_APP} --workers 2 --threads 4 --timeout 120 --reload
       "
     networks:
       - appnet
