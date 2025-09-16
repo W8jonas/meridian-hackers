@@ -36,3 +36,12 @@ class Observer:
                     for tx in new_transactions:
                         print("Nova transação detectada:", tx)
             time.sleep(interval)
+    def check_saldo(self,public_key):
+        account = self.server.accounts().account_id(public_key).call()
+        lista_saldo = []
+        for balance in account['balances']:
+            asset_type = balance['asset_type']
+            balance_amount = balance['balance']
+            print(f"Ativo: {asset_type}, Saldo: {balance_amount}")
+            lista_saldo.append({"ativo":asset_type,"saldo":balance_amount})
+        return lista_saldo
