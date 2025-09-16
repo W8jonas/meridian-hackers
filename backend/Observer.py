@@ -6,6 +6,7 @@ class Observer:
         self.wallets = wallets
         self.server = Server(config.URL_SERVER) 
         self.seen_transactions = set()  
+        self.transaction_info = []
     def check_new_transactions(self,public_key):
         try:
             payments = self.server.payments().for_account(public_key).limit(10).order(desc=True).call()
@@ -34,6 +35,7 @@ class Observer:
                 new_transactions = self.check_new_transactions(wallet["public_key"])
                 if new_transactions:
                     for tx in new_transactions:
+                        self.transaction_info.append(tx)
                         print("Nova transação detectada:", tx)
             time.sleep(interval)
     def check_saldo(self,public_key):

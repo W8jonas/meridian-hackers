@@ -26,6 +26,9 @@ def run():
     thread = threading.Thread(target=run_observer, daemon=True)
     thread.start() 
     return jsonify({"message": "observador iniciado com sucesso!"})
+@app.route("/seen-transactions",methods=["GET"])
+def seen_transactions():
+    return jsonify(list(observer.transaction_info))
 @app.route("/depositar",methods=["POST"])
 def depositar():
     data =  request.get_json()
