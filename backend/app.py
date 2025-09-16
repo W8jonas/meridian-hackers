@@ -26,13 +26,20 @@ def run():
     thread = threading.Thread(target=run_observer, daemon=True)
     thread.start() 
     return jsonify({"message": "observador iniciado com sucesso!"})
-@app.route("/invoke-contract",methods=["POST"])
-def invoke_contract():
+@app.route("/depositar",methods=["POST"])
+def depositar():
     data =  request.get_json()
     contract_id = data.get("contract_id")
-    function_name = data.get("function_name")
+    function_name = 'deposit'
+    wallet_public_key = data.get("wallet_public_key")
+    parameters = data.get("parameters")
+    #amount _asset
+    wallet_key_pair = Wallets.get_wallet_by_key(wallet_public_key)
+    invoke_contract(contract_id,function_name,parameters,wallet_key_pair)
+def invoke_contract(contract_id,function_name,parameters,wallet_key_pair):
+
     contract = SorobanContractInvoker(config.RPC_SERVER_URL,config.NETWORK_PASSPHRASE)
-    contract.invoke()
+    contract.invoke(wallet_key_pair,contract_id,function_name,parameters)
 
 # Executa a aplicação
 if __name__ == "__main__":

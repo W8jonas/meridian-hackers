@@ -9,6 +9,6 @@ class Wallets:
         return self.wallets
     def get_wallet_by_key(self, chave):
         for wallet in self.wallets:
-            if wallet["chave"] == chave:
+            if wallet["public_key"] == chave:
                 return wallet
         return None
