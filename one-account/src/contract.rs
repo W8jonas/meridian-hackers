@@ -3,8 +3,8 @@ use crate::{
     storage,
     vault,
 };
-
-use soroban_sdk::{contract, contracttype, contractimpl, Address, Env, token::TokenClient};
+use blend_contract_sdk::pool::{Client as PoolClient, Request};
+use soroban_sdk::{auth::{ContractContext, InvokerContractAuthEntry, SubContractInvocation}, contract, contractimpl, contracttype, token::TokenClient, vec, Address, Env, IntoVal, Symbol};
 
 #[contracttype]
 pub enum Enum {
@@ -30,39 +30,47 @@ impl FeeVault {
         env: Env,
         amount: i128,
     ) {
-        let user: Address = env.storage().instance().get(&Enum::User).unwrap();
-        user.require_auth();
-
-        // TODO: the deposit_manager key should be the one singing this transaction
-        // let manager: Address = env.storage().instance().get(&Enum::DepositManager).unwrap();
-        // manager.require_auth();
+        let manager: Address = env.storage().instance().get(&Enum::DepositManager).unwrap();
+        manager.require_auth();
 
         // TODO: validation
-        // TODO: get account current balance and remove amount param
 
+        let asset = storage::get_asset(&env);
+        let pool = storage::get_pool(&env);
+
+        env.authorize_as_current_contract(vec![
+                &env,
+                InvokerContractAuthEntry::Contract(SubContractInvocation {
+                    context: ContractContext {
+                        contract: asset.clone(),
+                        fn_name: Symbol::new(&env, "transfer"),
+                        args: (
+                            env.current_contract_address(),
+                            pool.clone(),
+                            amount,
+                        )
+                        .into_val(&env),
+                    },
+                    sub_invocations: vec![&env],
+                }),
+            ]);
+        let smart_wallet: Address = env.current_contract_address();
         let pool = storage::get_pool(&env);
         let asset = storage::get_asset(&env);
-        pool::supply(&env, &pool, &asset, &user, amount);
+        pool::supply(&env, &pool, &asset, &smart_wallet, amount);
     }
 
     pub fn balance(
         env: Env,
     ) -> i128 {
-        // TODO: not working, always 0
-        let user: Address = env.storage().instance().get(&Enum::User).unwrap();
-        // let user: Address = env.current_contract_address();
-        user.require_auth();
+        let pool = storage::get_pool(&env);
+        let asset = storage::get_asset(&env);
+        let pool_client = PoolClient::new(&env, &pool);
+        let positions = pool_client.get_positions(&env.current_contract_address());
+        let reserve = pool_client.get_reserve(&asset.clone());
+        let b_tokens = positions.supply.get(reserve.config.index).unwrap_or(0);
 
-        let shares = storage::get_vault_shares(&env, &user);
-        if shares > 0 {
-            let pool = storage::get_pool(&env);
-            let asset = storage::get_asset(&env);
-            let vault = vault::get_vault_updated(&env, &pool, &asset);
-            let b_tokens = vault.shares_to_b_tokens_down(shares);
-            vault.b_tokens_to_underlying_down(b_tokens)
-        } else {
-            0
-        }
+        (b_tokens * reserve.data.b_rate) / 1000_000_000_000
     }
 
     pub fn payment(env: Env, to: Address, amount: i128) {
